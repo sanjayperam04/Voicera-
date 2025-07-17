@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voicera</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .upload-section {
+            margin: 30px 0;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .file-input-label:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            color: #495057;
+        }
+
+        .upload-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .analyze-btn:active {
+            transform: translateY(0);
+        }
+
+        .notification {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .error-notification {
+            background: #fee;
+            color: #c53030;
+            border-left: 4px solid #fc8181;
+        }
+
+        .success-notification {
+            background: #f0fff4;
+            color: #38a169;
+            border-left: 4px solid #68d391;
+        }
+
+        @media (max-width: 600px) {
+            .main-wrapper {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .main-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="header-section">
+            <h1 class="main-title">Audio Authenticity Analyzer</h1>
+            <p class="subtitle">Upload your WAV audio file to detect if it contains synthetic or manipulated content</p>
+        </div>
+        
+        <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="upload-section">
+                <div class="file-input-wrapper">
+                    <input type="file" name="audio_file" accept=".wav" class="file-input" id="audioFile">
+                    <label for="audioFile" class="file-input-label">
+                        <span class="upload-icon">🎵</span>
+                        <span>Click to select WAV audio file</span>
+                        <br>
+                        <small>or drag and drop here</small>
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="analyze-btn">Start Analysis</button>
+        </form>
+        
+        {% if message %}
+        <div class="notification error-notification">{{ message }}</div>
+        {% endif %}
+        
+        {% if error_message %}
+        <div class="notification error-notification">{{ error_message }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Add file name display functionality
+        document.getElementById('audioFile').addEventListener('change', function(e) {
+            const label = document.querySelector('.file-input-label span:first-child + span');
+            if (e.target.files.length > 0) {
+                label.innerHTML = `Selected: ${e.target.files[0].name}`;
+                label.parentElement.style.borderColor = '#667eea';
+                label.parentElement.style.background = '#f0f4ff';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> Voicera | Detection Results </title>
+
+    <!-- ======  Local styles  ====== -->
+    <style>
+        :root {
+            --primary: #1e88e5;     /* “brand” blue */
+            --surface: #ffffff;
+            --body-bg: #f5f7fa;
+            --text-main: #232323;
+            --shadow: 0 6px 12px rgba(0, 0, 0, .08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--body-bg);
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+
+        main.card {
+            background: var(--surface);
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: min(90%, 420px);
+        }
+
+        h1 {
+            margin: 0 0 1.3rem;
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+
+        p.message {
+            margin: .5rem 0 2rem;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .btn-primary {
+            appearance: none;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            padding: .75rem 1.75rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            text-decoration: none;          /* when rendered as <a> */
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            background: #0f6fc3;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <h1>Detection Result</h1>
+
+        <!-- Flask injects the string held in classification_result -->
+        <p class="message">{{ classification_result }}</p>
+
+        <!-- Anchor is simpler than JS for navigation -->
+        <a href="/" class="btn-primary">Analyse another file</a>
+    </main>
+</body>
+</html>
